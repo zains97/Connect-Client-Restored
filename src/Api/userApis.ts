@@ -2,7 +2,7 @@ import axios from 'axios';
 import {Alert, LogBox} from 'react-native';
 import {IUser} from '../Interfaces/UserInterface';
 
-const hostURL = 'http://192.168.0.107:5000';
+const hostURL = 'http://192.168.0.106:5000';
 
 export const loginUser = async (email: string, password: string) => {
   try {

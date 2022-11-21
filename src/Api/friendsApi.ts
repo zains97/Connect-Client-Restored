@@ -4,7 +4,7 @@ import {Dispatch} from 'react';
 import {Alert} from 'react-native';
 import {IUser} from '../Interfaces/UserInterface';
 
-const hostURL = `http://192.168.0.107:5000/api/friends`;
+const hostURL = `http://192.168.0.106:5000/api/friends`;
 
 export const getFriendRequests = async (recipientId: string) => {
   try {

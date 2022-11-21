@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "339083667636",
+    "project_id": "fyp-connect",
+    "storage_bucket": "fyp-connect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339083667636:android:17b4f2071d9f09bc570fe1",
+        "android_client_info": {
+          "package_name": "com.navigation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339083667636-c3cpvvm2pvgi6706f6e0r66r7lcl9str.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZBsB7Iv4TGvUJ_GjIML7Z-RbkJB3MkKA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339083667636-c3cpvvm2pvgi6706f6e0r66r7lcl9str.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

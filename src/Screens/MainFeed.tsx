@@ -31,11 +31,16 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../Redux/store/store';
 import {checkBlocked} from '../Utilities/checkBlocked';
+import {connect, Socket} from 'socket.io-client';
+import {updateSocketState} from '../Redux/slices/SocketSlice';
 
 type Props = {
   navigation: any;
 };
 const {width} = Dimensions.get('screen');
+
+const SERVER = 'http://192.168.0.106:5000/';
+let socket: Socket;
 
 const MainFeed = ({navigation}: Props) => {
   //Component start
@@ -60,6 +65,12 @@ const MainFeed = ({navigation}: Props) => {
   const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] =
     React.useState(defaultPosts);
   const [loading, setLoading] = React.useState<boolean>(true);
+
+  React.useEffect(() => {
+    socket = connect(SERVER);
+    dispatch(updateSocketState(socket));
+    // socket.emit('test', {user: me, msg: 'From main'});
+  }, []);
 
   React.useEffect(() => {
     getInterestedPosts(me.interests)

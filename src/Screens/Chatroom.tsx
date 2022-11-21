@@ -19,7 +19,7 @@ import {text} from '@cloudinary/url-gen/qualifiers/source';
 import {IMessage} from '../Interfaces/IMessage';
 import {getAllMessages} from '../Api/chatroomApi';
 
-const SERVER = 'http://192.168.0.107:5000';
+const SERVER = 'http://192.168.0.106:5000/';
 let socket: Socket;
 type Props = {
   route: any;
@@ -38,6 +38,9 @@ const Chatroom = (props: Props) => {
   const startCall = () => {
     socket.emit('callUser', {message: 'Starting call'});
   };
+
+  socket = useSelector(state => state.socket.value);
+  console.log(socket.active);
 
   const sendMessage = (messageBody: string) => {
     socket.emit(
@@ -59,7 +62,7 @@ const Chatroom = (props: Props) => {
   };
 
   useEffect(() => {
-    socket = connect(SERVER);
+    // socket = connect(SERVER);
     socket.emit('joinRoom', {chatroomId: chatroom._id});
     socket.on('message', message => {
       setMessageArr(oldArr => [message, ...oldArr]);

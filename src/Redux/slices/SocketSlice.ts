@@ -1,21 +1,19 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Socket} from 'socket.io-client';
-import {IUser} from '../../Interfaces/UserInterface';
 
-export interface UserState {
+export interface SocketState {
   value: Socket;
 }
 
-const initialState = {
-  value: null,
+const initialState: Socket | any = {
+  value: {},
 };
 
 export const socketSlice = createSlice({
   name: 'socket',
   initialState,
   reducers: {
-    updateSocketState: (state, action) => {
-      console.log('socket saved: ', action.payload);
+    updateSocketState: (state, action: PayloadAction<Socket>) => {
       state.value = action.payload;
     },
   },

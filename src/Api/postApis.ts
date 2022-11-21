@@ -3,7 +3,7 @@ import {Alert} from 'react-native';
 import {IPost} from '../Interfaces/PostInterfaces';
 
 // https://connect-server-fyp.herokuapp.com
-const hostURL = 'http://192.168.0.107:5000';
+const hostURL = 'http://192.168.0.106:5000';
 
 export const getAllPosts = async () => {
   const {data} = await (await fetch(`${hostURL}/api/posts`)).json();
