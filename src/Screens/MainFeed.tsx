@@ -33,6 +33,9 @@ import {RootState} from '../Redux/store/store';
 import {checkBlocked} from '../Utilities/checkBlocked';
 import {connect, Socket} from 'socket.io-client';
 import {updateSocketState} from '../Redux/slices/SocketSlice';
+import {getFcmToken} from '../config/notificationHelper';
+import messaging from '@react-native-firebase/messaging';
+import {storeFcm} from '../Api/userApis';
 
 type Props = {
   navigation: any;
@@ -89,6 +92,14 @@ const MainFeed = ({navigation}: Props) => {
       });
 
     return () => {};
+  }, []);
+
+  React.useEffect(() => {
+    messaging()
+      .getToken()
+      .then(res => {
+        storeFcm(me._id, res);
+      });
   }, []);
 
   const onRefresh = React.useCallback(() => {

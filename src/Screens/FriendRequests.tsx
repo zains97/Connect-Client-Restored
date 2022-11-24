@@ -15,6 +15,7 @@ const FriendRequests = (props: Props) => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     getFriendRequests(me._id).then(res => {
+      console.log(res);
       setfriendRequests(res);
       setLoading(false);
     });

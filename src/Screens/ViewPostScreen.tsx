@@ -60,6 +60,7 @@ const ViewPostScreen = ({navigation, route}: any) => {
   useEffect(() => {
     getOnePost(selectedPost._id)
       .then(res => {
+        console.log('POST', res);
         setPost(res.data);
         setLoading(false);
       })

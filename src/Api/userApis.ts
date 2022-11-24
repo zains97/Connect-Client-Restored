@@ -171,3 +171,15 @@ export const updateInterests = async (interests: string[], userId: string) => {
     Alert.alert('Failed to update, try again');
   }
 };
+
+export const storeFcm = async (userId: string, fcmToken: string) => {
+  try {
+    let {data} = await axios.put(`${hostURL}/api/user/store-fcm-token`, {
+      userId,
+      fcmToken,
+    });
+    return data;
+  } catch (error) {
+    return {success: false};
+  }
+};

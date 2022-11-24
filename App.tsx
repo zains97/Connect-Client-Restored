@@ -6,10 +6,29 @@ import {Provider as PaperProvider} from 'react-native-paper';
 import {store} from './src/Redux/store/store';
 import {Provider} from 'react-redux';
 import messaging from '@react-native-firebase/messaging';
+import {
+  notificationListener,
+  requestUserPermission,
+} from './src/config/notificationHelper';
 
 type Props = {};
 
 const App = (props: Props) => {
+  useEffect(() => {
+    requestUserPermission();
+    notificationListener();
+  }, []);
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log(remoteMessage.notification);
+      Alert.alert(
+        remoteMessage.notification?.title,
+        remoteMessage.notification?.body,
+      );
+    });
+
+    return unsubscribe;
+  }, []);
   return (
     <Provider store={store}>
       <PaperProvider>
