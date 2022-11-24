@@ -34,6 +34,7 @@ const TextChat = ({navigation}: Props) => {
     getChats(me._id)
       .then(res => {
         if (res?.success) {
+          console.log(res);
           setChatrooms(res?.chatrooms);
         } else {
           Alert.alert('Failed to retrieve chats');
