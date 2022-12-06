@@ -120,6 +120,7 @@ const ViewPostScreen = ({navigation, route}: any) => {
             {post?.comments.map((comment: any, index: any) => (
               <CommentComponent
                 key={index}
+                creatorImage={comment?.creatorImage}
                 commentBody={comment?.commentBody}
               />
             ))}

@@ -23,6 +23,7 @@ import {
   getTrendingPosts,
   likePost,
   reportPost,
+  unlikePost,
 } from '../Api/postApis';
 import {checkBlocked} from '../Utilities/checkBlocked';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -116,13 +117,25 @@ const TrendingPosts = ({navigation}: any) => {
                 <Card.Actions>
                   <Button
                     onPress={() => {
-                      likePost(me._id, item._id, item);
+                      if (item.likers.includes(me._id)) {
+                        unlikePost(me._id, item._id);
+                      } else {
+                        likePost(me._id, item._id, item);
+                      }
                     }}>
-                    <MaterialCommunityIcons
-                      name="thumb-up-outline"
-                      color="#1d4ed8"
-                      size={22}
-                    />
+                    {item.likers.includes(me._id) ? (
+                      <MaterialCommunityIcons
+                        name="thumb-up"
+                        color="#1d4ed8"
+                        size={20}
+                      />
+                    ) : (
+                      <MaterialCommunityIcons
+                        name="thumb-up-outline"
+                        color="#1d4ed8"
+                        size={20}
+                      />
+                    )}
                   </Button>
                   <Text style={{color: 'blue'}}>
                     {item.likeCount == undefined ? 0 : item.likeCount}

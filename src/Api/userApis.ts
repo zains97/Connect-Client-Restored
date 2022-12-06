@@ -2,6 +2,7 @@ import axios from 'axios';
 import {Alert, LogBox} from 'react-native';
 import {IUser} from '../Interfaces/UserInterface';
 
+// const hostURL = 'https://whispering-mesa-47615.herokuapp.com';
 const hostURL = 'http://192.168.0.106:5000';
 
 export const loginUser = async (email: string, password: string) => {
@@ -50,6 +51,16 @@ export const unblockUser = async (userId: string, otherId: string) => {
       ? Alert.alert('Success', 'USER HAS BEEN UNBLOCKED')
       : Alert.alert('Sorry', 'Failed to unblock user');
   });
+};
+
+export const getBlockedUsers = async (userId: string) => {
+  try {
+    const url = `${hostURL}/api/user/get-blocked/${userId}`;
+    let {data} = await axios.get(url);
+    return data.success ? data : {success: false};
+  } catch (error) {
+    return {success: false};
+  }
 };
 
 export const sendMessage = async (body: string, to: string, from: string) => {
@@ -161,14 +172,15 @@ export const getAllUsers = async () => {
 };
 
 export const updateInterests = async (interests: string[], userId: string) => {
+  console.log(interests, userId);
   try {
-    let {data} = await axios.put(`${hostURL}/api/user/update-interests`, {
+    let {data} = await axios.patch(`${hostURL}/api/user/update-interests`, {
       interests,
       userId,
     });
-    Alert.alert('Successfully Updated user interests');
+    return data.success ? data : {success: false};
   } catch (error) {
-    Alert.alert('Failed to update, try again');
+    return {success: false};
   }
 };
 
@@ -180,6 +192,16 @@ export const storeFcm = async (userId: string, fcmToken: string) => {
     });
     return data;
   } catch (error) {
+    return {success: false};
+  }
+};
+
+export const getMyFriends = async (userId: string) => {
+  try {
+    let {data} = await axios.get(`${hostURL}/api/user/my-friends/${userId}`);
+    return data.success ? data : {success: false};
+  } catch (error) {
+    console.log(error);
     return {success: false};
   }
 };

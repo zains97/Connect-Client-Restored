@@ -42,13 +42,17 @@ type Props = {
 };
 const {width} = Dimensions.get('screen');
 
-const SERVER = 'http://192.168.0.106:5000/';
+// const SERVER = 'https://whispering-mesa-47615.herokuapp.com/';
+const SERVER = 'http://192.168.0.106:5000';
+
 let socket: Socket;
 
 const MainFeed = ({navigation}: Props) => {
   //Component start
   const dispatch = useDispatch();
   const me = useSelector((state: RootState) => state.me.value);
+  console.log('\nME main feed screen:  ', me.interests);
+
   const LeftContent = (image: any, userId: string) => (
     <TouchableOpacity
       onPress={() => {
@@ -71,6 +75,7 @@ const MainFeed = ({navigation}: Props) => {
 
   React.useEffect(() => {
     socket = connect(SERVER);
+    console.log('Socket Connected: ', socket.connected);
     dispatch(updateSocketState(socket));
     // socket.emit('test', {user: me, msg: 'From main'});
   }, []);
@@ -102,9 +107,10 @@ const MainFeed = ({navigation}: Props) => {
       });
   }, []);
 
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = React.useCallback(interests => {
     setRefreshing(true);
-    getInterestedPosts(me.interests)
+    console.log('Interests refresh: ', interests);
+    getInterestedPosts(interests)
       .then(res => {
         if (res.success == true) {
           setPosts(res.posts);
@@ -130,7 +136,7 @@ const MainFeed = ({navigation}: Props) => {
             <RefreshControl
               colors={['blue']}
               refreshing={refreshing}
-              onRefresh={onRefresh}
+              onRefresh={() => onRefresh(me.interests)}
             />
           }
           style={{margin: 20}}

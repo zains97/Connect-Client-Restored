@@ -86,21 +86,9 @@ const Profile = ({navigation}: Props) => {
               justifyContent: 'space-around',
             }}>
             <TouchableOpacity
-              style={{
-                borderWidth: 2,
-                width: 130,
-                height: 100,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderStyle: 'dotted',
-                borderColor: 'white',
-                borderRadius: 10,
-                margin: 15,
-              }}>
-              <Text style={{color: 'white', fontSize: 24}}>10</Text>
-              <Text style={{color: 'white', fontSize: 24}}>POSTS</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('MyFriends');
+              }}
               style={{
                 borderWidth: 2,
                 width: 130,

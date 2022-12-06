@@ -12,6 +12,11 @@ import {
   FriendRequests,
   Chatroom,
   UpdateInterests,
+  GettingCall,
+  Video,
+  VideoCall,
+  BlockedUsers,
+  MyFriends,
 } from '.';
 import Profile from './Profile';
 import {Header} from '../Components';
@@ -33,6 +38,7 @@ const AuthStack = (props: Props) => {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="SignUp2" component={SignUp2} />
+      <Stack.Screen name="BlockedUsers" component={BlockedUsers} />
       <Stack.Screen name="MainApp" component={MainApp} />
       <Stack.Screen name="SelectChat" component={SelectPersonToChat} />
       <Stack.Screen name="PictureDisplay" component={PicDisplay} />
@@ -69,6 +75,10 @@ const AuthStack = (props: Props) => {
       <Stack.Screen name="Chatroom" component={Chatroom} />
       <Stack.Screen name="ViewPost" component={ViewPostScreen} />
       <Stack.Screen name="UpdateInterests" component={UpdateInterests} />
+      <Stack.Screen name="GettingCall" component={GettingCall} />
+      <Stack.Screen name="Video" component={Video} />
+      <Stack.Screen name="VideoCall" component={VideoCall} />
+      <Stack.Screen name="MyFriends" component={MyFriends} />
     </Stack.Navigator>
   );
 };

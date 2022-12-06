@@ -8,7 +8,11 @@ import {
   Alert,
 } from 'react-native';
 import React, {useState} from 'react';
-import {cancelFriendRequest, sendFriendRequest} from '../Api/friendsApi';
+import {
+  cancelFriendRequest,
+  sendFriendRequest,
+  unfriend,
+} from '../Api/friendsApi';
 import {useSelector} from 'react-redux';
 import {RootState} from '../Redux/store/store';
 import {useDispatch} from 'react-redux';
@@ -31,7 +35,8 @@ const OtherProfileModal = ({
 }: Props) => {
   const me = useSelector((state: RootState) => state.me.value);
   const dispatch = useDispatch();
-
+  const [sendRequestDisabled, setSendRequestDisabled] = useState(false);
+  console.log('Sent requests: ', me.sentFriendRequests);
   return (
     <Modal
       animationType="fade"
@@ -78,7 +83,21 @@ const OtherProfileModal = ({
               <Text style={styles.textStyle}>Block User</Text>
             </TouchableOpacity>
           )}
-          {me.sentFriendRequests.includes(userId) ? (
+          {me.friendsId.includes(userId) ? (
+            <>
+              <TouchableOpacity
+                style={styles.modalPress}
+                onPress={() => {
+                  setTimeout(async () => {
+                    let {success, user} = await unfriend(me._id, userId);
+                    console.log('Dispatch user', user);
+                    dispatch(updateMeState(user));
+                  }, 2000);
+                }}>
+                <Text style={styles.textStyle}>Unfriend</Text>
+              </TouchableOpacity>
+            </>
+          ) : me.sentFriendRequests.includes(userId) ? (
             //Cancel
             <TouchableOpacity
               style={styles.modalPress}
@@ -101,15 +120,17 @@ const OtherProfileModal = ({
             //Send
             <TouchableOpacity
               style={styles.modalPress}
+              disabled={sendRequestDisabled}
               onPress={() => {
-                sendFriendRequest(me, userId).then(res => {
-                  console.log('sendFriendRequest RES: ', res);
+                setSendRequestDisabled(true);
+                sendFriendRequest(me._id, userId).then(res => {
                   if (res.success == true) {
                     dispatch(updateMeState(res.user));
                   } else {
                     Alert.alert('Sorry', 'Failed to send friend request');
                   }
                 });
+                setSendRequestDisabled(false);
               }}>
               <Text style={styles.textStyle}>Send Friend Request</Text>
             </TouchableOpacity>

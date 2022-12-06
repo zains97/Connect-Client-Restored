@@ -2,7 +2,8 @@ import axios from 'axios';
 import {Alert} from 'react-native';
 import {IPost} from '../Interfaces/PostInterfaces';
 
-// https://connect-server-fyp.herokuapp.com
+// http://172.20.10.8:5000
+// const hostURL = 'https://whispering-mesa-47615.herokuapp.com';
 const hostURL = 'http://192.168.0.106:5000';
 
 export const getAllPosts = async () => {
@@ -49,6 +50,7 @@ export const newComment = async (
 };
 
 export const getFriendsPosts = async (friendsId: string[]) => {
+  console.log(friendsId);
   const url = `${hostURL}/api/posts/friends-post`;
   let res = await axios.post(url, {friendsId});
   return res.data;
@@ -107,6 +109,8 @@ export const getTrendingPosts = async () => {
 };
 
 export const getInterestedPosts = async (interests: string[]) => {
+  console.log(interests);
+
   let {data} = await axios.patch(`${hostURL}/api/posts/interest-post`, {
     interests,
   });

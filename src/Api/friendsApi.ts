@@ -5,6 +5,7 @@ import {Alert} from 'react-native';
 import {IUser} from '../Interfaces/UserInterface';
 
 const hostURL = `http://192.168.0.106:5000/api/friends`;
+// const hostURL = `https://whispering-mesa-47615.herokuapp.com/api/friends`;
 
 export const getFriendRequests = async (recipientId: string) => {
   try {
@@ -15,33 +16,38 @@ export const getFriendRequests = async (recipientId: string) => {
   }
 };
 
-export const acceptFriendRequest = (
+export const acceptFriendRequest = async (
   requesterId: String,
   recipientId: String,
   requestId: String,
 ) => {
-  axios
-    .put(`${hostURL}/confirm-request`, {
+  try {
+    let {data} = await axios.put(`${hostURL}/confirm-request`, {
       requesterId,
       recipientId,
       requestId,
-    })
-    .then(res => {
-      console.log(res);
-    })
-    .catch(e => Alert.alert(e.message));
+    });
+    return data.success ? data.user : {success: false};
+  } catch (error) {
+    return {success: false};
+  }
+  // .then(res => {
+  //   console.log(res);
+  // })
+  // .catch(e => Alert.alert(e.message));
 };
 
 export const sendFriendRequest = async (
-  requester: IUser,
-  recipient: String,
+  requester: string,
+  recipient: string,
 ) => {
   try {
     const {data} = await axios.post(`${hostURL}/send-request`, {
       requester,
       recipient,
     });
-    // data.success == true ? Alert.alert('Success') : Alert.alert('Failed');
+    data.success == true ? Alert.alert('Success') : Alert.alert('Failed');
+    console.log('sendFriendRequest RES: ', data);
     return data;
   } catch (err) {
     return {success: false};
@@ -73,6 +79,18 @@ const getFriends = async (userId: string) => {
   try {
     let {data} = await axios.get(`${hostURL}/${userId}`);
     return data;
+  } catch (error) {
+    return {success: false};
+  }
+};
+
+export const unfriend = async (userId: string, unfriendedId: string) => {
+  try {
+    let {data} = await axios.patch(`${hostURL}/unfriend`, {
+      userId,
+      unfriendedId,
+    });
+    return data.success ? data : {success: false};
   } catch (error) {
     return {success: false};
   }

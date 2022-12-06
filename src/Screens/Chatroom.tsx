@@ -19,10 +19,11 @@ import {text} from '@cloudinary/url-gen/qualifiers/source';
 import {IMessage} from '../Interfaces/IMessage';
 import {getAllMessages} from '../Api/chatroomApi';
 
-const SERVER = 'http://192.168.0.106:5000/';
+const SERVER = 'https://whispering-mesa-47615.herokuapp.com/';
 let socket: Socket;
 type Props = {
   route: any;
+  navigation: any;
 };
 
 const {width} = Dimensions.get('screen');
@@ -36,11 +37,11 @@ const Chatroom = (props: Props) => {
 
   let {chatroom, otherParticipant} = props.route.params;
   const startCall = () => {
-    socket.emit('callUser', {message: 'Starting call'});
+    props.navigation.navigate('VideoCall');
+    // socket.emit('callUser', {message: 'Starting call'});
   };
 
   socket = useSelector(state => state.socket.value);
-  console.log(socket.active);
 
   const sendMessage = (messageBody: string) => {
     socket.emit(
@@ -103,7 +104,7 @@ const Chatroom = (props: Props) => {
             )}
           </Text>
         </View>
-        <View style={styles.headerIconsContainer}>
+        {/* <View style={styles.headerIconsContainer}>
           <TouchableOpacity onPress={startCall}>
             <FontAwesome5Icon size={20} name="phone" color={'white'} />
           </TouchableOpacity>
@@ -113,7 +114,7 @@ const Chatroom = (props: Props) => {
           <TouchableOpacity>
             <FontAwesome5Icon size={20} name="ellipsis-v" color={'white'} />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
       <View style={styles.chatRoomBody}>
         <FlatList

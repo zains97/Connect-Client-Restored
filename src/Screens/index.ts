@@ -20,3 +20,7 @@ export {default as TextChat} from './TextChat';
 export {default as Chatroom} from './Chatroom';
 export {default as TrendingPosts} from './TrendingPosts';
 export {default as UpdateInterests} from './UpdateInterests';
+export {default as GettingCall} from './video-call/GettingCall';
+export {default as Video} from './video-call/Video';
+export {default as BlockedUsers} from './BlockedUsers';
+export {default as MyFriends} from './MyFriends';

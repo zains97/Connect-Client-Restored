@@ -15,7 +15,7 @@ const FriendRequests = (props: Props) => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     getFriendRequests(me._id).then(res => {
-      console.log(res);
+      console.log('REQUESTS: ', res);
       setfriendRequests(res);
       setLoading(false);
     });
@@ -29,9 +29,10 @@ const FriendRequests = (props: Props) => {
             <FriendRequest
               key={index}
               recipientId={me._id}
-              requesterId={friendRequest.requester.userId}
+              requesterId={friendRequest.requester._id}
               requestId={friendRequest._id}
-              requesterName={friendRequest.requester.name}
+              requesterFirstName={friendRequest.requester.firstName}
+              requesterLastName={friendRequest.requester.lastName}
               profilePic={friendRequest.requester.profilePic}
               setfriendRequests={setfriendRequests}
               friendRequests={friendRequests}

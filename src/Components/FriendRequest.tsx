@@ -1,19 +1,31 @@
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import React from 'react';
-import {acceptFriendRequest} from '../Api/friendsApi';
+import {acceptFriendRequest, cancelFriendRequest} from '../Api/friendsApi';
+import {IFriendRequest} from '../Interfaces/UserInterface';
+import {useDispatch} from 'react-redux';
+import {updateMeState} from '../Redux/slices/MeSlice';
 
 type Props = {
-  requesterName: String;
-  requesterId: String;
-  profilePic: String;
-  recipientId: String;
+  requesterFirstName: string;
+  requesterLastName: string;
+  requesterId: string;
+  profilePic: string;
+  recipientId: string;
   requestId: String;
   setfriendRequests: any;
   friendRequests: any;
 };
 
 const FriendRequest = ({
-  requesterName,
+  requesterFirstName,
+  requesterLastName,
   profilePic,
   recipientId,
   requesterId,
@@ -21,6 +33,7 @@ const FriendRequest = ({
   setfriendRequests,
   friendRequests,
 }: Props) => {
+  let dispatch = useDispatch();
   return (
     <View style={styles.container}>
       <View style={styles.info}>
@@ -30,20 +43,45 @@ const FriendRequest = ({
           }}
           style={styles.image}
         />
-        <Text style={styles.name}>{requesterName}</Text>
+        <Text style={styles.name}>
+          {requesterFirstName + ' ' + requesterLastName}
+        </Text>
       </View>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
           onPress={() => {
-            acceptFriendRequest(requesterId, recipientId, requestId);
+            acceptFriendRequest(requesterId, recipientId, requestId)
+              .then(res => {
+                setTimeout(() => {
+                  dispatch(updateMeState(res));
+                }, 500);
+              })
+              .catch(error => {});
             setfriendRequests(
-              friendRequests.filter(req => req._id != requestId),
+              friendRequests.filter(
+                (req: IFriendRequest) => req._id != requestId,
+              ),
             );
           }}
           style={styles.buttonBlue}>
           <Text style={styles.buttonText}>Accept</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonRed}>
+        <TouchableOpacity
+          onPress={() => {
+            cancelFriendRequest(recipientId, requesterId)
+              .then(res => {
+                console.log(res);
+                if (res.success != true) {
+                  Alert.alert('Something went wrong');
+                } else {
+                  dispatch(updateMeState(res.user));
+                }
+              })
+              .catch(e => {
+                Alert.alert('Something went wrong');
+              });
+          }}
+          style={styles.buttonRed}>
           <Text style={styles.buttonText}>Decline</Text>
         </TouchableOpacity>
       </View>

@@ -98,7 +98,7 @@ const OtherProfile = ({route, navigation, userId}: Props) => {
               flexDirection: 'row',
               justifyContent: 'space-around',
             }}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{
                 borderWidth: 2,
                 width: 130,
@@ -127,7 +127,7 @@ const OtherProfile = ({route, navigation, userId}: Props) => {
               }}>
               <Text style={{color: 'white', fontSize: 24}}>20</Text>
               <Text style={{color: 'white', fontSize: 24}}>FRIENDS</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </ImageBackground>

@@ -4,12 +4,13 @@ import image from '../Assets/goku.png';
 
 const {width} = Dimensions.get('screen');
 
-const CommentComponent = ({commentBody}: any) => {
+const CommentComponent = ({commentBody, creatorImage}: any) => {
+  console.log(creatorImage);
   return (
     <View style={{flexDirection: 'row', width: '100%'}}>
       <View>
         <Image
-          source={image}
+          source={{uri: creatorImage}}
           style={{
             width: 40,
             height: 40,

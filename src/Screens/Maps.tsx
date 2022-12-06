@@ -30,7 +30,6 @@ export default function App({navigation}: any) {
     longitude: 67.0961,
   });
   const [friends, setFriends] = useState<IUser[]>();
-
   const me = useSelector((state: RootState) => state.me.value);
   useEffect(() => {
     getLocation(setMyLocation);

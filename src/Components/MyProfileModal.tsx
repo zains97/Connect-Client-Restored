@@ -64,6 +64,14 @@ const OtherProfileModal = ({
             <Text style={styles.textStyle}>Update Interests</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            style={styles.modalPress}
+            onPress={() => {
+              setModalVisible(!modalVisible);
+              navigation.navigate('BlockedUsers');
+            }}>
+            <Text style={styles.textStyle}>Blocked users</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             style={styles.modalPressWarning}
             onPress={() => {
               setModalVisible(!modalVisible);

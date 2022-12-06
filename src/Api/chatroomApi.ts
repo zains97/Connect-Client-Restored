@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {Alert} from 'react-native';
 
-const hostURL = `http://192.168.0.106:5000/api/chatroom`;
+// const hostURL = `https://whispering-mesa-47615.herokuapp.com/api/chatroom`;
+const hostURL = 'http://192.168.0.106:5000/api/chatroom';
 
 export const createChatroom = async (
   participants: string[],
