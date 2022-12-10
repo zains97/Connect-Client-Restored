@@ -68,13 +68,18 @@ const FriendRequest = ({
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            cancelFriendRequest(recipientId, requesterId)
+            cancelFriendRequest(requesterId, recipientId)
               .then(res => {
-                console.log(res);
+                console.log('cancelFriendRequest RES: ', res);
                 if (res.success != true) {
                   Alert.alert('Something went wrong');
                 } else {
                   dispatch(updateMeState(res.user));
+                  setfriendRequests(
+                    friendRequests.filter(
+                      (req: IFriendRequest) => req._id != requestId,
+                    ),
+                  );
                 }
               })
               .catch(e => {

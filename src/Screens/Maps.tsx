@@ -8,6 +8,7 @@ import {
   View,
   PermissionsAndroid,
   Platform,
+  Alert,
 } from 'react-native';
 import MapView, {Callout, Marker} from 'react-native-maps';
 import {useSelector} from 'react-redux';
@@ -16,6 +17,7 @@ import {getAllFriends, updateLocation} from '../Api/userApis';
 import {IUser} from '../Interfaces/UserInterface';
 import {RootState} from '../Redux/store/store';
 import {getLocation} from '../Utilities/Permissions';
+import Geolocation from 'react-native-geolocation-service';
 
 export default function App({navigation}: any) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,9 +33,33 @@ export default function App({navigation}: any) {
   });
   const [friends, setFriends] = useState<IUser[]>();
   const me = useSelector((state: RootState) => state.me.value);
+
+  // useEffect(() => {
+  //   getLocation(setMyLocation).then(() => {
+  //     updateLocation(me._id, myLocation);
+  //   });
+  // }, []);
+
   useEffect(() => {
-    getLocation(setMyLocation);
-    updateLocation(me._id, myLocation);
+    PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    )
+      .then(() => {
+        if ('granted' === PermissionsAndroid.RESULTS.GRANTED) {
+          Geolocation.getCurrentPosition(
+            position => {
+              let {latitude, longitude} = position.coords;
+              setMyLocation({latitude, longitude});
+              updateLocation(me._id, {latitude, longitude});
+              console.log('USE EFFECT: ', {latitude, longitude});
+            },
+            err => {
+              Alert.alert('Failed to get location');
+            },
+          );
+        }
+      })
+      .catch(() => {});
   }, []);
 
   useEffect(() => {

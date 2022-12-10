@@ -158,7 +158,7 @@ const Publish = ({navigation}: Props) => {
                     }
                     setImage(res.assets[0].base64);
                   })
-                  .catch(e => Alert.alert(e));
+                  .catch(e => {});
               } else {
                 setImage(undefined);
               }

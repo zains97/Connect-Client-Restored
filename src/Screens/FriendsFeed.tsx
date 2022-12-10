@@ -65,10 +65,11 @@ const FriendsFeed = ({navigation}: any) => {
   }, []);
   const [refreshing, setRefreshing] = React.useState(false);
 
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = React.useCallback(friendsId => {
     setRefreshing(true);
-    getFriendsPosts(me.friendsId)
+    getFriendsPosts(friendsId)
       .then(response => {
+        console.log(response);
         setPosts(response);
         setRefreshing(false);
       })
@@ -82,20 +83,24 @@ const FriendsFeed = ({navigation}: any) => {
       });
   }, []);
 
+  console.log('ME FRIENDS:Freinds Feed => ', me.friendsId);
   return (
     <View>
       {loading ? (
         <ActivityIndicator color="#1d4ed8" />
       ) : (
         <FlatList
+          style={{
+            margin: 20,
+            minHeight: 70,
+          }}
           refreshControl={
             <RefreshControl
               colors={['blue']}
               refreshing={refreshing}
-              onRefresh={onRefresh}
+              onRefresh={() => onRefresh(me.friendsId)}
             />
           }
-          style={{margin: 20}}
           data={posts}
           renderItem={({item}) => (
             <Card style={{marginVertical: 5}}>

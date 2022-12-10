@@ -36,7 +36,8 @@ const OtherProfileModal = ({
   const me = useSelector((state: RootState) => state.me.value);
   const dispatch = useDispatch();
   const [sendRequestDisabled, setSendRequestDisabled] = useState(false);
-  console.log('Sent requests: ', me.sentFriendRequests);
+  console.log('OtherProfileModal blocked users: ', me.blockedUsers);
+
   return (
     <Modal
       animationType="fade"
@@ -46,21 +47,18 @@ const OtherProfileModal = ({
         setModalVisible(!modalVisible);
       }}>
       <View style={styles.centeredView}>
+        {/* //Unblock */}
         <View style={styles.modalView}>
-          {isBlocked ? (
+          {me.blockedUsers.includes(userId) ? (
             <TouchableOpacity
               style={styles.modalPress}
-              onPress={() => {
-                console.log('unBlock');
-                //Check
-                unblockUser(me._id, userId)
-                  .then(async () => {
-                    console.log('ME BEFORE: ', me);
-                    dispatch(updateMeState((await getUser(me._id)).data));
-                    console.log('ME AFTER', me);
-                  })
-                  .catch(() => {});
-
+              onPress={async () => {
+                let response = await unblockUser(me._id, userId);
+                if (response.success) {
+                  dispatch(updateMeState(response.user));
+                } else {
+                  Alert.alert('Failed to unblock user!');
+                }
                 setModalVisible(!modalVisible);
               }}>
               <Text style={styles.textStyle}>Unblock User</Text>
@@ -68,16 +66,14 @@ const OtherProfileModal = ({
           ) : (
             <TouchableOpacity
               style={styles.modalPress}
-              onPress={() => {
+              onPress={async () => {
                 //Check
-                blockUser(me._id, userId)
-                  .then(async () => {
-                    console.log('ME BEFORE: ', me);
-                    dispatch(updateMeState((await getUser(me._id)).data));
-                    console.log('ME AFTER', me);
-                  })
-                  .catch(() => {});
-
+                let response = await blockUser(me._id, userId);
+                if (response.success) {
+                  dispatch(updateMeState(response.user));
+                } else {
+                  Alert.alert('Failed to block user');
+                }
                 setModalVisible(!modalVisible);
               }}>
               <Text style={styles.textStyle}>Block User</Text>
@@ -116,7 +112,7 @@ const OtherProfileModal = ({
               }}>
               <Text style={styles.textStyle}>Cancel Friend Request</Text>
             </TouchableOpacity>
-          ) : (
+          ) : !me.blockedUsers.includes(userId) ? (
             //Send
             <TouchableOpacity
               style={styles.modalPress}
@@ -134,6 +130,8 @@ const OtherProfileModal = ({
               }}>
               <Text style={styles.textStyle}>Send Friend Request</Text>
             </TouchableOpacity>
+          ) : (
+            <></>
           )}
           <TouchableOpacity
             style={styles.modalPressWarning}

@@ -19,7 +19,8 @@ import {text} from '@cloudinary/url-gen/qualifiers/source';
 import {IMessage} from '../Interfaces/IMessage';
 import {getAllMessages} from '../Api/chatroomApi';
 
-const SERVER = 'https://whispering-mesa-47615.herokuapp.com/';
+const SERVER = 'http://192.168.0.106:5000';
+// 'https://whispering-mesa-47615.herokuapp.com/';
 let socket: Socket;
 type Props = {
   route: any;

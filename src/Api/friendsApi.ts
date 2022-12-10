@@ -53,7 +53,7 @@ export const sendFriendRequest = async (
     return {success: false};
   }
 };
-
+//CLIENT SE REQUEST CLEAR HAI
 export const cancelFriendRequest = async (
   senderId: string,
   recipientId: string,
@@ -67,12 +67,6 @@ export const cancelFriendRequest = async (
   } catch (error) {
     return {success: false};
   }
-  // .then(res => {
-  //   res.data.success == true
-  //     ? Alert.alert('REQUEST CANCELLED')
-  //     : Alert.alert('Failed to cancel request');
-  // })
-  // .catch(() => Alert.alert('Failed to cancel request'));
 };
 
 const getFriends = async (userId: string) => {

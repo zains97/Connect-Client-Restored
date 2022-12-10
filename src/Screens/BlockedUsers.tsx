@@ -68,7 +68,12 @@ const BlockedUsers = (props: Props) => {
                   </Text>
                 </View>
                 <Button
-                  onPress={() => unblockOnPress(me._id, user._id)}
+                  onPress={() => {
+                    unblockOnPress(me._id, user._id);
+                    setBlockedUsers(oldArr =>
+                      oldArr?.filter(x => x._id != user._id),
+                    );
+                  }}
                   color="white"
                   style={styles.button}>
                   <Text>Unblock</Text>

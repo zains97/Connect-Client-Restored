@@ -51,7 +51,7 @@ const MainFeed = ({navigation}: Props) => {
   //Component start
   const dispatch = useDispatch();
   const me = useSelector((state: RootState) => state.me.value);
-  console.log('\nME main feed screen:  ', me.interests);
+  console.log('\nME blockedBy main feed screen:  ', me.blockedBy);
 
   const LeftContent = (image: any, userId: string) => (
     <TouchableOpacity
@@ -109,7 +109,6 @@ const MainFeed = ({navigation}: Props) => {
 
   const onRefresh = React.useCallback(interests => {
     setRefreshing(true);
-    console.log('Interests refresh: ', interests);
     getInterestedPosts(interests)
       .then(res => {
         if (res.success == true) {
@@ -142,7 +141,8 @@ const MainFeed = ({navigation}: Props) => {
           style={{margin: 20}}
           data={posts}
           renderItem={({item}) =>
-            !checkBlocked(item.creator, me.blockedUsers) ? (
+            !checkBlocked(item.creator, me.blockedUsers) &&
+            !me.blockedBy.includes(item.creator) ? (
               <TouchableOpacity
                 onLongPress={() => {
                   setModalVisible(true);
@@ -231,7 +231,6 @@ const MainFeed = ({navigation}: Props) => {
                       <Button
                         onPress={() => {
                           reportPost(me._id, item._id);
-                          console.log('Report');
                         }}
                         color="white"
                         style={{

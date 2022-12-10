@@ -2,6 +2,7 @@ export interface IUser {
   __v: number;
   _id: string;
   blockedUsers: [];
+  blockedBy: string[];
   chatID: [];
   currentLocation: {_id: string; latitude: string; longitude: string};
   dob: any;

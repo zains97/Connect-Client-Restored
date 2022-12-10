@@ -31,26 +31,25 @@ export const getUser = async (userId: string) => {
 };
 
 export const blockUser = async (userId: string, otherId: string) => {
-  const url = `${hostURL}/api/user/block/${userId}`;
-  axios
-    .put(url, {toBlock: otherId})
-    .then(res => {
-      res.data.success
-        ? Alert.alert('Success', 'USER HAS BEEN BLOCKED')
-        : Alert.alert('Sorry', 'Failed to block user');
-    })
-    .catch(e => {
-      return Alert.alert('Something went wrong.');
-    });
+  try {
+    const url = `${hostURL}/api/user/block/${userId}`;
+    let {data} = await axios.put(url, {toBlock: otherId});
+
+    return data;
+  } catch (error) {
+    return {success: false};
+  }
 };
 
 export const unblockUser = async (userId: string, otherId: string) => {
-  const url = `${hostURL}/api/user/unblock/${userId}`;
-  axios.put(url, {toUnBlock: otherId}).then(res => {
-    res.data.success
-      ? Alert.alert('Success', 'USER HAS BEEN UNBLOCKED')
-      : Alert.alert('Sorry', 'Failed to unblock user');
-  });
+  try {
+    const url = `${hostURL}/api/user/unblock/${userId}`;
+    let {data} = await axios.put(url, {toUnBlock: otherId});
+
+    return data.success ? data : {success: false};
+  } catch (error) {
+    return {success: false};
+  }
 };
 
 export const getBlockedUsers = async (userId: string) => {
