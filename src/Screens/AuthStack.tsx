@@ -17,6 +17,7 @@ import {
   VideoCall,
   BlockedUsers,
   MyFriends,
+  ChatroomDetails,
 } from '.';
 import Profile from './Profile';
 import {Header} from '../Components';
@@ -79,6 +80,7 @@ const AuthStack = (props: Props) => {
       <Stack.Screen name="Video" component={Video} />
       <Stack.Screen name="VideoCall" component={VideoCall} />
       <Stack.Screen name="MyFriends" component={MyFriends} />
+      <Stack.Screen name="ChatroomDetails" component={ChatroomDetails} />
     </Stack.Navigator>
   );
 };

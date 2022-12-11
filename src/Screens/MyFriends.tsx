@@ -32,50 +32,52 @@ const MyFriends = ({navigation}: Props) => {
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
-      {!loading ? (
-        friends?.length > 0 ? (
-          friends?.map((user, index) => (
-            <View key={index}>
-              <View style={styles.headingContainer}>
-                <Text style={styles.text}>Your Friends</Text>
-              </View>
-              <View style={styles.userContainer}>
-                <View style={styles.userInfoContainer}>
-                  <Image
-                    style={styles.profilePicture}
-                    source={{uri: user.profilePic}}
-                  />
-                  <Text style={styles.text}>
-                    {user.firstName + ' ' + user.lastName}
-                  </Text>
+    <>
+      <View style={styles.headingContainer}>
+        <Text style={styles.text}>Your Friends</Text>
+      </View>
+      <ScrollView style={styles.container}>
+        {!loading ? (
+          friends?.length > 0 ? (
+            friends?.map((user, index) => (
+              <View key={index}>
+                <View style={styles.userContainer}>
+                  <View style={styles.userInfoContainer}>
+                    <Image
+                      style={styles.profilePicture}
+                      source={{uri: user.profilePic}}
+                    />
+                    <Text style={styles.text}>
+                      {user.firstName + ' ' + user.lastName}
+                    </Text>
+                  </View>
+                  <Button
+                    onPress={() => {
+                      navigation.navigate('OtherProfile', {userId: user._id});
+                    }}
+                    color="white"
+                    style={styles.button}>
+                    <Text>View Profile</Text>
+                  </Button>
                 </View>
-                <Button
-                  onPress={() => {
-                    navigation.navigate('OtherProfile', {userId: user._id});
-                  }}
-                  color="white"
-                  style={styles.button}>
-                  <Text>View Profile</Text>
-                </Button>
               </View>
-            </View>
-          ))
+            ))
+          ) : (
+            <Text
+              style={{
+                alignSelf: 'center',
+                color: 'black',
+                fontSize: 16,
+                marginVertical: '50%',
+              }}>
+              You don't have any friends yet :(
+            </Text>
+          )
         ) : (
-          <Text
-            style={{
-              alignSelf: 'center',
-              color: 'black',
-              fontSize: 16,
-              marginVertical: '50%',
-            }}>
-            You don't have any friends yet :(
-          </Text>
-        )
-      ) : (
-        <ActivityIndicator style={{marginVertical: '50%'}} />
-      )}
-    </ScrollView>
+          <ActivityIndicator style={{marginVertical: '50%'}} />
+        )}
+      </ScrollView>
+    </>
   );
 };
 

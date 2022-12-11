@@ -97,12 +97,7 @@ const TextChat = ({navigation}: Props) => {
               </Button>
               <Button
                 onPress={() => {
-                  deleteChatroom(
-                    selectedChatroom.participants.map(
-                      participant => participant._id,
-                    ),
-                    selectedChatroom._id,
-                  );
+                  deleteChatroom(selectedChatroom._id);
                 }}
                 color="white"
                 style={[styles.button, {backgroundColor: 'blue'}]}>
@@ -119,6 +114,7 @@ const TextChat = ({navigation}: Props) => {
         New Conversation
       </Button>
       <ScrollView
+        style={{minHeight: 150, minWidth: '100%'}}
         refreshControl={
           <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
         }>

@@ -4,7 +4,8 @@ import {Dispatch} from 'react';
 import {Alert} from 'react-native';
 import {IUser} from '../Interfaces/UserInterface';
 
-const hostURL = `http://192.168.0.106:5000/api/friends`;
+const hostUrl = 'https://connect-fyp-zain.herokuapp.com/api/friends';
+// const hostURL = `http://192.168.0.106:5000/api/friends`;
 // const hostURL = `https://whispering-mesa-47615.herokuapp.com/api/friends`;
 
 export const getFriendRequests = async (recipientId: string) => {

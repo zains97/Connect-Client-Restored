@@ -24,3 +24,4 @@ export {default as GettingCall} from './video-call/GettingCall';
 export {default as Video} from './video-call/Video';
 export {default as BlockedUsers} from './BlockedUsers';
 export {default as MyFriends} from './MyFriends';
+export {default as ChatroomDetails} from './ChatroomDetails';

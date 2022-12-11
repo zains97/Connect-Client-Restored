@@ -43,8 +43,8 @@ type Props = {
 const {width} = Dimensions.get('screen');
 
 // const SERVER = 'https://whispering-mesa-47615.herokuapp.com/';
-const SERVER = 'http://192.168.0.106:5000';
-
+// const SERVER = 'http://192.168.0.106:5000';
+const SERVER = 'https://connect-fyp-zain.herokuapp.com';
 let socket: Socket;
 
 const MainFeed = ({navigation}: Props) => {

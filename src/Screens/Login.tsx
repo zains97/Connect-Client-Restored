@@ -85,7 +85,7 @@ const Login = ({navigation}: Props) => {
                 }
               })
               .catch(e => {
-                Alert.alert(e);
+                Alert.alert('Failed to login');
                 setBtnLoading(false);
               });
           }}>
