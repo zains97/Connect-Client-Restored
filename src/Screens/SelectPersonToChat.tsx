@@ -9,7 +9,7 @@ import {
   Modal,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {getAllUsers} from '../Api/userApis';
+import {getAllUsers, getMyFriends} from '../Api/userApis';
 import {IUser} from '../Interfaces/UserInterface';
 import {Button, TextInput} from 'react-native-paper';
 import {useSelector} from 'react-redux';
@@ -26,14 +26,14 @@ const PersonView = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [groupName, setGroupName] = useState('');
 
-  console.log(selectedUsers);
+  console.log('Selected user', selectedUsers);
   useEffect(() => {
-    getAllUsers()
+    getMyFriends(me._id)
       .then(res => {
-        setUsers(res.data);
+        setUsers(res.friends);
       })
       .catch(() => {
-        Alert.alert('Failed to retrieve users');
+        Alert.alert('Failure', 'Could not get friends');
       });
 
     return () => {};
@@ -65,6 +65,7 @@ const PersonView = () => {
                     if (res.success) {
                       Alert.alert('Successfully created chatrrom');
                     } else {
+                      console.log(res);
                       Alert.alert('Failed');
                     }
                   });
@@ -106,41 +107,38 @@ const PersonView = () => {
         </Button>
         {users?.map((user, index) =>
           me._id != user._id ? (
-            <>
-              <TouchableOpacity
-                key={index}
-                onPress={() => {
-                  if (selectedUsers?.includes(user._id)) {
-                    let temp = selectedUsers.filter(userId => {
-                      return user._id != userId;
-                    });
-                    setSelectedUsers(temp);
-                  } else {
-                    setSelectedUsers(oldArr => [...oldArr, user._id]);
-                  }
-                }}
-                key={index}
-                style={[
-                  styles.container,
-                  {
-                    backgroundColor: selectedUsers.includes(me._id)
-                      ? 'white'
-                      : 'gray',
-                  },
-                ]}>
-                <View style={styles.info}>
-                  <Image
-                    source={{
-                      uri: user.profilePic as any,
-                    }}
-                    style={styles.image}
-                  />
-                  <Text style={styles.name}>
-                    {user?.firstName + ' ' + user.lastName}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </>
+            <TouchableOpacity
+              key={index}
+              onPress={() => {
+                if (selectedUsers?.includes(user._id)) {
+                  let temp = selectedUsers.filter(userId => {
+                    return user._id != userId;
+                  });
+                  setSelectedUsers(temp);
+                } else {
+                  setSelectedUsers(oldArr => [...oldArr, user._id]);
+                }
+              }}
+              style={[
+                styles.container,
+                {
+                  backgroundColor: !selectedUsers.includes(user._id)
+                    ? 'white'
+                    : 'gray',
+                },
+              ]}>
+              <View style={styles.info}>
+                <Image
+                  source={{
+                    uri: user.profilePic as any,
+                  }}
+                  style={styles.image}
+                />
+                <Text style={styles.name}>
+                  {user?.firstName + ' ' + user.lastName}
+                </Text>
+              </View>
+            </TouchableOpacity>
           ) : (
             <></>
           ),

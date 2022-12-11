@@ -81,7 +81,8 @@ const UpdateInterests = () => {
                 if (res.success) {
                   setTimeout(() => {
                     dispatch(updateMeState(res.user));
-                  }, 3000);
+                    Alert.alert('Interests Updated');
+                  }, 1000);
                 } else {
                   Alert.alert('Failed to update, try again,');
                 }

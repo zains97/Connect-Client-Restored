@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     paddingRight: 2,
   },
   chatRoomBody: {flex: 9.2, paddingTop: 5},
-  image: {height: 45, width: 45, borderRadius: 50},
+  image: {height: 45, width: 45, borderRadius: 50, backgroundColor: 'black'},
   imageContainer: {flex: 1.1, justifyContent: 'center', alignItems: 'center'},
   rightArrow: {
     position: 'absolute',
