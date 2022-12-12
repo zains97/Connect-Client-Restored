@@ -4,8 +4,8 @@ import {IPost} from '../Interfaces/PostInterfaces';
 
 // http://172.20.10.8:5000
 // const hostURL = 'https://whispering-mesa-47615.herokuapp.com';
-const hostURL = 'http://192.168.0.106:5000';
-const hostUrl = 'https://connect-fyp-zain.herokuapp.com';
+// const hostURL = 'http://192.168.0.106:5000';
+const hostURL = 'https://connect-fyp-zain.herokuapp.com';
 
 export const getAllPosts = async () => {
   const {data} = await (await fetch(`${hostURL}/api/posts`)).json();
